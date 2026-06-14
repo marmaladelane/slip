@@ -40,13 +40,13 @@ The Sonoff should be configured to send a signal to the smart lighting controlle
 Do not attempt to build this circuit unless you are sufficiently skilled and comfortable with soldering, and observe all sensible safety precautions, including but not limited to:
 
 * Test the circuit thoroughly before connecting to the mains, as described below under Testing.
+* Install appropriate fuses (the minimum possible values) on the board and its AC mains voltage supply.
 * Always use a [residual current device](https://www.screwfix.com/p/masterplug-13a-unfused-plug-through-active-rcd-adaptor/63731) when connecting to mains, especially during development.
 * Always double-check that power is disconnected before touching the board (e.g. visual check, use a voltage tester and check the power LED).
 * Keep an electrical-safe (not red/water) fire extinguisher nearby during development.
 * Never leave the board powered unattended indoors.
 * Only permanently install the board outdoors, away from flammable materials.
-* In any public area, enclose the board in a sealed, waterproof box which cannot be opened accidentally.
-* Install appropriate fuses (the minimum possible values) on the board and its AC mains voltage supply.
+* Permanently install the board in a sealed, waterproof box which cannot be opened accidentally.
 * Protect the board from water by sealing all holes in the box with rubber grommets and cable glands.
 
 Note that the Sonoff device and this home-made board are not CE approved, and if either of them causes a fire it is entirely your responsibility.
@@ -54,6 +54,7 @@ Note that the Sonoff device and this home-made board are not CE approved, and if
 ## Bill of materials
 
 | Component   | Code  | Qty | Cost  | Link | Notes |
+| ----------- | ----- | --- | ----- | ---- | ----- |
 | Stripboard  |       | 1   | £4.80 | https://cpc.farnell.com/kemo-electronic/e005/stripboard-fr4-100x160mm/dp/PC01603 |
 | Fuse holder | F1    | 1   | £0.67 | https://uk.rs-online.com/web/p/fuse-holders/8930574 |
 | Glass fuse  | 0.2 A | 1   | £0.06 | https://www.amazon.co.uk/dp/B0CD1Z6TDH | 
@@ -107,7 +108,27 @@ On the underside of the board, bend the bare wire ends over to hold them in plac
 
 ![Breadboard with wire ends bent over](IMG_8440.jpg)
 
-Mount and solder the remaining components onto the board (see photo above). Clip the PCB terminals together so they don't sit awkwardly like in mine did.
+Mount and solder the remaining components onto the board (see photo above). Clip the PCB terminals together so they don't sit awkwardly like mine did.
 
 ## Testing
 
+Test all the following **before** applying mains power.
+
+With no wires connected to the PCB terminals, no glass fuse installed, no Sonoff installed, you should have:
+
+* No continuity across track breaks.
+* No shorts between adjacent tracks (test both sides of each track break separately).
+* No continuity across the fuse holder (F1).
+* High resistance (about 35k ohms) across the coil of the relay.
+* No continuity between the centre and NO contacts of the relay U1.
+* Continuity between the north side of the fuse holder and:
+  * *L In* and *S1* on the Sonoff,
+  * the *L sens* terminal,
+  * the right-hand side of capacitor C1,
+  * the centre contact of relay U1.
+* Continuity between the *SL* terminal and the upper side of the coil of relay U1.
+* Continuity between the *N in* terminal and:
+  * The lower side of the coil of relay U1,
+  * The other two N terminals,
+  * The N pin of the Sonoff (J1).
+* No continuity between any of the Live terminals and any of the Neutral terminals.
