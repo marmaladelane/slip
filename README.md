@@ -37,6 +37,16 @@ The Sonoff should be configured to send a signal to the smart lighting controlle
 
 ### ⚠️ WARNING: This circuit uses live mains voltage, which can kill!
 
+The risks include:
+
+* Fire,
+* Electric shock,
+* Personal injury,
+* Property damage,
+* Death.
+
+Neither the Sonoff device nor this home-made board are CE approved. If you follow these instructions, it is **entirely at your own risk**.
+
 Do not attempt to build this circuit unless you are sufficiently skilled and comfortable with soldering, and observe all sensible safety precautions, including but not limited to:
 
 * Test the circuit thoroughly before connecting to the mains, as described below under Testing.
@@ -49,8 +59,6 @@ Do not attempt to build this circuit unless you are sufficiently skilled and com
 * Permanently install the board in a sealed, waterproof box which cannot be opened accidentally.
 * Protect the board from water by sealing all holes in the box with rubber grommets and cable glands.
 
-Note that the Sonoff device and this home-made board are not CE approved, and if either of them causes a fire it is entirely your responsibility.
-
 ## Bill of materials
 
 | Component   | Code  | Qty | Cost  | Link | Notes |
@@ -58,8 +66,9 @@ Note that the Sonoff device and this home-made board are not CE approved, and if
 | Stripboard  |       | 1   | £4.80 | https://cpc.farnell.com/kemo-electronic/e005/stripboard-fr4-100x160mm/dp/PC01603 |
 | Fuse holder | F1    | 1   | £0.67 | https://uk.rs-online.com/web/p/fuse-holders/8930574 |
 | Glass fuse  | 0.2 A | 1   | £0.06 | https://www.amazon.co.uk/dp/B0CD1Z6TDH | 
-| Capacitor   | C1    | 1   | £0.40 | https://uk.rs-online.com/web/p/film-capacitors/2011934 |
-| LED         | D1    | 1   | £0.15 | https://uk.rs-online.com/web/p/leds/2285916 |
+| Resistor    | R1,R2 | 2   | £0.44 | https://uk.rs-online.com/web/p/through-hole-resistors/7078918 | 2W carbon film 15k ohms |
+| LED         | D1,D3 | 2   | £0.60 | https://uk.rs-online.com/web/p/leds/2285916 | Cheap, simple red LED |
+| Diode       | D2,D4 | 2   | £0.12 | https://uk.rs-online.com/web/p/schottky-diodes-rectifiers/6491143 | 1N4007, 1kV rated |
 | Sonoff connector | J1 | 1 | £2.54 | https://uk.rs-online.com/web/p/pcb-headers/1800623 | 0.2" pin spacing to mate with Sonoff |
 | PCB Power Relay | U1 | 1  | £5.53 | https://uk.rs-online.com/web/p/power-relays/6803820P | 230V AC Coil |
 | PCB terminal, 2 way | L in/out| 2 | £1.08 | https://cpc.farnell.com/camdenboss/ctb3000-2/pcb-terminal-45deg-low-prof-5mm/dp/CN19467 | 45 Degree Low Profile, 5mm spacing |
@@ -78,13 +87,24 @@ And you might want to use rigid 20mm [conduit](https://www.screwfix.com/p/deta-t
 
 Mark the stripboard to size of outline of board, plus any edges, cutouts and holes needed to hold it in place inside its case (see above). Ensure that the strips run in the correct direction before cutting!
 
-Print out a copy of the breadboard layout, and glue it to the top side of the board (you can use pritt stick for this). Ensure tha the holes on the print line up with the holes pre-drilled in the board before the glue sets:
+Print out a copy of the breadboard layout, and glue it to the top side of the board (you can use pritt stick for this). Ensure that the holes on the print line up with the holes pre-drilled in the board before the glue sets:
 
 ![Breadboard with printed layout glued on](IMG_8428.jpg)
 
 Cut along the lines with a junior hacksaw. Cut from the edges towards the middle of the board, otherwise it may snap. Sand down the sharp cut edges for safety.
 
 ![Breadboard cut to shape](IMG_8430.jpg)
+
+The copper track on the underside must be cut completely in some places:
+
+* Between the pins of the fuse (F1).
+* Between the Sonoff (J1) left neutral (N) pin and the *L in* terminal.
+* Between the right end of the fuse (F1) and the *N out* terminal.
+* Below both pins of LED D3.
+* Midway underneath the jumper left of the U1 marking.
+* Between the SL terminal and the LED D1.
+* Between the SL terminal and the Sonoff (J1) pin S2.
+* Between the top and bottom rows of pins of the relay (U1).
 
 Poke a pin through the paper (into the pre-drilled hole below) where the where the tracks should be cut, so you can see through the holes from the other side, then gently drill with a 3mm bit from the other side, **not** all the way through the board, just enough to break the copper track completely (both sides):
 
@@ -132,3 +152,13 @@ With no wires connected to the PCB terminals, no glass fuse installed, no Sonoff
   * The other two N terminals,
   * The N pin of the Sonoff (J1).
 * No continuity between any of the Live terminals and any of the Neutral terminals.
+
+With no glass fuse (F1) or Sonoff (J1) installed, connect mains power to *L in N* and verify that the power LED does not light, and there is no power (250V AC) to any terminal except *L in*.
+
+Power off and install a glass fuse in F1. Power on and check that the Sonoff pin 4 (*L In*) and *L sens* are live (250V AC) and the power LED (D1) lights.
+
+Power off and install the Sonoff on J1. Power on and check that its LED flashes.
+
+Power off and connect the PIR sensor to *L send SL N*. Power on and check that the relay clicks and the switch LED (D3) lights briefly when the power is applied or when the PIR sensor is triggered.
+
+Add the Sonoff to the eWeLink app on a phone and check that its output (shown in the app) goes high when the PIR sensor is triggered (and D3 is lit), and off when the PIR sensor relaxes (and D3 is off),
