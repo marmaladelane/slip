@@ -12,6 +12,8 @@ To connect the relay and make the wiring easier and safer, I designed this circu
 
 You can open the [source file](board-v2.fzz) in [Fritzing](https://fritzing.org) (open source, small charge for binary download) or print the [printable PDF](board-v2-breadboard.pdf). There is also a PCB in the Fritzing file, but it's untested.
 
+Many thanks to Roy Gwinn for reviewing my design and suggesting several changes to improve safety and reliability.
+
 ## Principle of operation
 
 This is the circuit schematic:
@@ -55,6 +57,7 @@ Do not attempt to build this circuit unless you are sufficiently skilled and com
 * Always double-check that power is disconnected before touching the board (e.g. visual check, use a voltage tester and check the power LED).
 * Keep an electrical-safe (not red/water) fire extinguisher nearby during development.
 * Never leave the board powered unattended indoors.
+* Clean (e.g. with isopropyl alcohol) and PAT test the finished board.
 * Only permanently install the board outdoors, away from flammable materials.
 * Permanently install the board in a sealed, waterproof box which cannot be opened accidentally.
 * Protect the board from water by sealing all holes in the box with rubber grommets and cable glands.
@@ -66,8 +69,8 @@ Do not attempt to build this circuit unless you are sufficiently skilled and com
 | Stripboard  |       | 1   | £4.80 | https://cpc.farnell.com/kemo-electronic/e005/stripboard-fr4-100x160mm/dp/PC01603 |
 | Fuse holder | F1    | 1   | £0.67 | https://uk.rs-online.com/web/p/fuse-holders/8930574 |
 | Glass fuse  | 0.2 A | 1   | £0.06 | https://www.amazon.co.uk/dp/B0CD1Z6TDH | 
-| Resistor    | R1,R2 | 2   | £0.44 | https://uk.rs-online.com/web/p/through-hole-resistors/7078918 | 2W carbon film 15k ohms |
-| LED         | D1,D3 | 2   | £0.60 | https://uk.rs-online.com/web/p/leds/2285916 | Cheap, simple red LED |
+| Resistor    | R1,R2 | 2   | £0.44 | https://uk.rs-online.com/web/p/through-hole-resistors/6835798P | 2W metal film 47k ohms |
+| LED         | D1,D3 | 2   | £0.85 | https://uk.rs-online.com/web/p/leds/7133936P | High brightness 3mm green LED recommended |
 | Diode       | D2,D4 | 2   | £0.12 | https://uk.rs-online.com/web/p/schottky-diodes-rectifiers/6491143 | 1N4007, 1kV rated |
 | Sonoff connector | J1 | 1 | £2.54 | https://uk.rs-online.com/web/p/pcb-headers/1800623 | 0.2" pin spacing to mate with Sonoff |
 | PCB Power Relay | U1 | 1  | £5.53 | https://uk.rs-online.com/web/p/power-relays/6803820P | 230V AC Coil |
@@ -95,18 +98,18 @@ Cut along the lines with a junior hacksaw. Cut from the edges towards the middle
 
 ![Breadboard cut to shape](IMG_8430.jpg)
 
-The copper track on the underside must be cut completely in some places:
+Some of the copper tracks on the underside must be **removed completely**. They are shown on the breadboard as having tracks cut between every hole. They are columns 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 24, 25, 27, 29. Poke a pin through the paper somewhere on each of these rows, so you can see through the hole from the other side. Turn the board over (copper side up), identify the rows marked with these holes, and remove each one in turn. Use a soldering iron to weaken the glue and get a scalpel under one end. Then using pliers to pull, run the soldering iron along the track and lift away the copper. If you go too fast it tears, too slow and it burns the SRBP. Practice is needed.
 
-* Between the pins of the fuse (F1).
-* Between the Sonoff (J1) left neutral (N) pin and the *L in* terminal.
-* Between the right end of the fuse (F1) and the *N out* terminal.
-* Below both pins of LED D3.
-* Midway underneath the jumper left of the U1 marking.
-* Between the SL terminal and the LED D1.
+The copper track must also be cut in some places:
+
+* Between the pins of the fuse (F1) (two holes cut).
+* Between the Sonoff (J1) left neutral (N) pin and the *L in* terminal, left of the QR code (two holes cut).
+* Between the *L In* pin of the Sonoff (J1) and the *N out* terminal, right of the QR code (two holes cut).
+* Below the right-hand pin of LED D3, above LED D1 (unfortunately hidden behind D1 on the breadboard view).
 * Between the SL terminal and the Sonoff (J1) pin S2.
-* Between the top and bottom rows of pins of the relay (U1).
+* Between the top and bottom coil pins of the relay (U1), above the *U1* label (two holes cut).o
 
-Poke a pin through the paper (into the pre-drilled hole below) where the where the tracks should be cut, so you can see through the holes from the other side, then gently drill with a 3mm bit from the other side, **not** all the way through the board, just enough to break the copper track completely (both sides):
+Poke a pin through the paper (into the pre-drilled hole below) where the where the tracks should be cut, so you can see through the holes from the other side, then gently drill with a 4mm bit from the other side, **not** all the way through the board, just enough to break the copper track completely (both sides):
 
 ![Breadboard reverse with tracks cut](IMG_8434.jpg)
 
@@ -118,9 +121,9 @@ Some of the pre-drilled holes need to be enlarged to take the larger pins of som
 
 Use the actual terminal blocks to determine where the pins are that should be drilled through, not the green markings on the breadboard image (these are a different type of terminal blocks).
 
-Poke a pin through these holes, then drill through with a 1.5mm bit.
+Poke a pin through each of these holes, then drill through with a 1.5mm bit.
 
-Poke a pin through all remaining component holes (C1, D1, U1) and wire ends. Cut wires to length (or use pre-formed breadboard jumper wires) and mount on the board. Ignore the other components already mounted in this photo, it's better to mount all the wires first:
+Poke a pin through the holes at each end of each jumper wire. Cut wires to length (or use pre-formed breadboard jumper wires) and mount on the board. Ignore the other components already mounted in this photo, it's better to mount all the wires first:
 
 ![Breadboard with wires mounted](IMG_8441.jpg)
 
@@ -128,7 +131,9 @@ On the underside of the board, bend the bare wire ends over to hold them in plac
 
 ![Breadboard with wire ends bent over](IMG_8440.jpg)
 
-Mount and solder the remaining components onto the board (see photo above). Clip the PCB terminals together so they don't sit awkwardly like mine did.
+Poke a pin through all remaining component holes (R1-2, D1-5, U1). Mount and solder the remaining components onto the board (see photo above). **Leave R1 and R2 to last**, as they need to be bent into special shapes to act as jumper wires, and their leads must not touch each other or any other component or wire. Clip the PCB terminals together before soldering them, so they don't sit awkwardly like mine did.
+
+Clean off any remaining solder flux (e.g. with isopropyl alcohol) and inspect the board for shorts, solder bridges and contamination.
 
 ## Testing
 
@@ -144,7 +149,7 @@ With no wires connected to the PCB terminals, no glass fuse installed, no Sonoff
 * Continuity between the north side of the fuse holder and:
   * *L In* and *S1* on the Sonoff,
   * the *L sens* terminal,
-  * the right-hand side of capacitor C1,
+  * the right-hand side of resistor R1,
   * the centre contact of relay U1.
 * Continuity between the *SL* terminal and the upper side of the coil of relay U1.
 * Continuity between the *N in* terminal and:
@@ -153,7 +158,7 @@ With no wires connected to the PCB terminals, no glass fuse installed, no Sonoff
   * The N pin of the Sonoff (J1).
 * No continuity between any of the Live terminals and any of the Neutral terminals.
 
-With no glass fuse (F1) or Sonoff (J1) installed, connect mains power to *L in N* and verify that the power LED does not light, and there is no power (250V AC) to any terminal except *L in*.
+With no glass fuse (F1) or Sonoff (J1) installed, connect mains power to *L in N* and verify that the power LED (D1) does not light, and there is no power (250V AC) to any terminal except *L in*.
 
 Power off and install a glass fuse in F1. Power on and check that the Sonoff pin 4 (*L In*) and *L sens* are live (250V AC) and the power LED (D1) lights.
 
@@ -161,4 +166,6 @@ Power off and install the Sonoff on J1. Power on and check that its LED flashes.
 
 Power off and connect the PIR sensor to *L send SL N*. Power on and check that the relay clicks and the switch LED (D3) lights briefly when the power is applied or when the PIR sensor is triggered.
 
-Add the Sonoff to the eWeLink app on a phone and check that its output (shown in the app) goes high when the PIR sensor is triggered (and D3 is lit), and off when the PIR sensor relaxes (and D3 is off),
+Add the Sonoff to the eWeLink app on a phone and check that its output (shown in the app) goes high when the PIR sensor is triggered (and D3 is lit), and off when the PIR sensor relaxes (and D3 is off).
+
+PAT test the finished circuit.
